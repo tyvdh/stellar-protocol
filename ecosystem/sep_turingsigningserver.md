@@ -97,11 +97,11 @@ Name | Type | Description
 
 ###### Example
 
-```json
+```json5
 {
   "contract": {
     ...
-    path: "/path/to/contract.js"
+    "path": "/path/to/contract.js"
     ...
   },
   "turrets": "aHR0c...J1eno="
