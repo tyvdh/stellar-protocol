@@ -63,7 +63,7 @@ Name | Type | Description
 
 ```json
 {
-   "error": "..."
+  "error": "..."
 }
 ```
 
@@ -97,7 +97,7 @@ Name | Type | Description
 {
   "contract": {
     ...
-    "path": "/path/to/contract.js"
+    "path": "/path/to/contract.js",
     ...
   },
   "turrets": "aHR0c...J1eno="
@@ -118,9 +118,9 @@ Name | Type | Description
 
 ```json
 {
-    "vault": "GD6J...",
-    "signer": "GDLZ...",
-    "fee": "0.5"
+  "vault": "GD6J...",
+  "signer": "GDLZ...",
+  "fee": "0.5"
 }
 ```
 
@@ -142,9 +142,9 @@ Name | Type | Description
 
 ```json
 {
-    "vault": "GD6J...",
-    "signer": "GDLZ...",
-    "fee": "0.5"
+  "vault": "GD6J...",
+  "signer": "GDLZ...",
+  "fee": "0.5"
 }
 ```
 
@@ -198,9 +198,9 @@ This endpoint runs a smart contract.
 
 ```json
 {
-	"to": "GAWS...",
-	"source": "GAWS...",
-	"amount": "500"
+  "to": "GAWS...",
+  "source": "GAWS...",
+  "amount": "500"
 }
 ```
 
@@ -218,9 +218,9 @@ Name | Type | Description
 
 ```json
 {
-    "xdr": "AAAAAC0mu...EtAAAAAAAAAAAA=",
-    "signer": "GDLZ...",
-    "signature": "UA6NqXp...qsHVJBAQ=="
+  "xdr": "AAAAAC0mu...EtAAAAAAAAAAAA=",
+  "signer": "GDLZ...",
+  "signature": "UA6NqXp...qsHVJBAQ=="
 }
 ```
 
