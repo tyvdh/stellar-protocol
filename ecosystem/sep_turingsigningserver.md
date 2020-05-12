@@ -86,7 +86,7 @@ Name | Type | Description
 -----|------|------------
 `contract` | file | The contract function file the contract creator is uploading to the turing server.
 `turrets` | string | base64 encoded comma-separated list of urls where this contract will be hosted.
-`fields` | array<{name: string, type: string, description: string}> | Array of objects detailing the expected incoming request parameters.
+`fields` | array<{name: string, type: string, description: string, rules: string}> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rules` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
 
 ###### Example
 
@@ -102,17 +102,20 @@ Name | Type | Description
     {
       "name": "to",
       "type": "string",
-      "description": "Where should we send TYLERCOIN to?"
+      "description": "Where should we send TYLERCOIN to?",
+      "rules": "Must be a valid Stellar address"
     },
     {
       "name": "source",
       "type": "string",
-      "description": "What's the source account for this transaction?"
+      "description": "What's the source account for this transaction?",
+      "rules": "Must be a valid Stellar address, often the same as the `to` address"
     },
     {
       "name": "amount",
       "type": "string",
-      "description": "TYLERCOIN is purchased 1:1 for XLM. How much do you want to pay & receive?"
+      "description": "TYLERCOIN is purchased 1:1 for XLM. How much do you want to pay & receive?",
+      "rules": "Must be a valid numerical amount above any TSS signing fee for this contract"
     }
   ]
 }
@@ -151,7 +154,7 @@ Name | Type | Description
 `vault` | string | Turing signing server account where signing fees must be paid to
 `signer` | string | The signing account for this contract on this turing server. This is what you'll add to contract or user accounts for multisig protection.
 `fee` | string | The XLM fee required by this turing server to sign for contracts.
-`fields` | array<{name: string, type: string, description: string}> | Array of input objects detailing the expected incoming request parameters for the contract.
+`fields` | array<{name: string, type: string, description: string, rules: string}> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rules` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
 
 ###### Example
 
@@ -164,17 +167,20 @@ Name | Type | Description
     {
       "name": "to",
       "type": "string",
-      "description": "Where should we send TYLERCOIN to?"
+      "description": "Where should we send TYLERCOIN to?",
+      "rules": "Must be a valid Stellar address"
     },
     {
       "name": "source",
       "type": "string",
-      "description": "What's the source account for this transaction?"
+      "description": "What's the source account for this transaction?",
+      "rules": "Must be a valid Stellar address, often the same as the `to` address"
     },
     {
       "name": "amount",
       "type": "string",
-      "description": "TYLERCOIN is purchased 1:1 for XLM. How much do you want to pay & receive?"
+      "description": "TYLERCOIN is purchased 1:1 for XLM. How much do you want to pay & receive?",
+      "rules": "Must be a valid numerical amount above any TSS signing fee for this contract"
     }
   ]
 }
@@ -257,18 +263,13 @@ Name | Type | Description
 ```
 
 ## Design Rationale
-The rationale fleshes out the specification by describing what motivated this particular design and
-why certain design decisions were made. It should describe alternate designs that were
-considered and related work, e.g. how the feature is supported in other protocols. The rationale
-may also provide evidence of consensus within the community, and should discuss important
-objections or concerns raised during discussion.
+<!-- The rationale fleshes out the specification by describing what motivated this particular design and why certain design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other protocols. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion. -->
 
 ## Implementations
 
 ## Limitations
 
 ## Security Concerns
-All SEPs should carefully consider areas where security may be a concern, and document them
-accordingly. If a change does not have security implications, write "N/A".
+<!-- All SEPs should carefully consider areas where security may be a concern, and document them accordingly. If a change does not have security implications, write "N/A". -->
 
 ## Legal
