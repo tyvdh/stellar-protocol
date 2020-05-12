@@ -35,7 +35,7 @@ All endpoints are publically accessible and require no authentication with the e
 
 All endpoints accept `Content-Type: application/json` with the exception of `POST|UPDATE /contract/:hash` which accepts `Content-Type: multipart/form`.
 
-All endpoints respond with `Content-Type: application/json` with the exception of `GET /contract/:hash/run/collate` which responds with `Content-Type: text/plain`.
+All endpoints respond with `Content-Type: application/json` with the exception of `GET /contract/:hash/run/collate` and `PUT /contract/:hash` which respond with `Content-Type: text/plain`.
 
 ### Errors
 
@@ -82,10 +82,6 @@ Name | Type | Description
 
 This endpoint uploads a smart contract.
 
-
-##### Authentication
-[`NONE`]
-
 ##### Request
 
 ###### Fields
@@ -118,13 +114,113 @@ Name | Type | Description
 `signer` | string | The signing account for this contract on this turing server. This is what you'll add to contract or user accounts for multisig protection.
 `fee` | string | The XLM fee required by this turing server to sign for contracts.
 
-##### Example
+###### Example
 
 ```json
 {
     "vault": "GD6J...",
     "signer": "GDLZ...",
     "fee": "0.5"
+}
+```
+
+#### `GET /contract/<hash>`
+
+This endpoint gets the details surrounding a smart contract.
+
+##### Response
+
+###### Fields
+
+Name | Type | Description
+-----|------|------------
+`vault` | string | Turing signing server account where signing fees must be paid to
+`signer` | string | The signing account for this contract on this turing server. This is what you'll add to contract or user accounts for multisig protection.
+`fee` | string | The XLM fee required by this turing server to sign for contracts.
+
+###### Example
+
+```json
+{
+    "vault": "GD6J...",
+    "signer": "GDLZ...",
+    "fee": "0.5"
+}
+```
+
+#### `PUT /contract/<hash>`
+
+This endpoint updates an existing contract's turret list.
+
+##### Request
+
+###### Fields
+
+Name | Type | Description
+-----|------|------------
+`turrets` | string | base64 encoded comma-separated list of urls where this contract will be hosted.
+`signature` | string | base64 encoded contract keypair signature of the `turrets` string.
+
+###### Example
+
+```json
+{
+  "turrets": "aHR0c...J1eno=",
+  "signature": "u5wYk...9HVAA=="
+}
+```
+
+##### Response
+
+###### Fields
+
+Status Code | Name | Reason
+-----|------|------------
+`200` | OK | Contract turret list was updated
+
+###### Example
+
+```text
+OK
+```
+
+#### `POST /contract/<hash>/run`
+
+This endpoint runs a smart contract.
+
+##### Request
+
+###### Fields
+
+[See contract run fields]
+
+###### Example
+
+```json
+{
+	"to": "GAWS...",
+	"source": "GAWS...",
+	"amount": "500"
+}
+```
+
+##### Response
+
+###### Fields
+
+Name | Type | Description
+-----|------|------------
+`xdr` | string | base64 transaction envelope produced by the contract
+`signer` | string | The signer account for the signature for the contract xdr
+`signature` | string | The signature intended to be attached to the xdr should it be needed
+
+###### Example
+
+```json
+{
+    "xdr": "AAAAAC0mu...EtAAAAAAAAAAAA=",
+    "signer": "GDLZ...",
+    "signature": "UA6NqXp...qsHVJBAQ=="
 }
 ```
 
