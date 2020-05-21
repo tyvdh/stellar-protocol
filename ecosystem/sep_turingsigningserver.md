@@ -103,7 +103,8 @@ Name | Type | Description
     ...
   },
   "turrets": "aHR0c...J1eno=",
-  "fields": [
+  "fields": "W3sibm...QifV0="
+  [ // Send as base64 encode so JSON.stringify -> btoa
     {
       "name": "to",
       "type": "string",
@@ -122,7 +123,7 @@ Name | Type | Description
       "description": "TYLERCOIN is purchased 1:1 for XLM. How much do you want to pay & receive?",
       "rule": "Must be a valid numerical amount above any TSS signing fee for this contract"
     }
-  ] // Send as base64 encode so JSON.stringify -> btoa
+  ]
 }
 ```
 
@@ -187,7 +188,7 @@ Name | Type | Description
       "description": "TYLERCOIN is purchased 1:1 for XLM. How much do you want to pay & receive?",
       "rule": "Must be a valid numerical amount above any TSS signing fee for this contract"
     }
-  ] // Will be base64 encoded so atob -> JSON.parse
+  ]
 }
 ```
 
