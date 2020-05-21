@@ -89,7 +89,7 @@ Name | Type | Description
 -----|------|------------
 `contract` | file | The contract function file the contract creator is uploading to the turing server.
 `turrets` | string | base64 encoded comma-separated list of urls where this contract will be hosted.
-`fields` | array\<\{name: string, type: string\|object\|array, description: string, rules: string\}\> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rules` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
+`fields` | array\<\{name: string, type: string\|object\|array, description: string, rule: string\}\> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rule` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
 
 ###### Example
 
@@ -108,21 +108,21 @@ Name | Type | Description
       "name": "to",
       "type": "string",
       "description": "Where should we send TYLERCOIN to?",
-      "rules": "Must be a valid Stellar address"
+      "rule": "Must be a valid Stellar address"
     },
     {
       "name": "source",
       "type": "string",
       "description": "What's the source account for this transaction?",
-      "rules": "Must be a valid Stellar address, often the same as the `to` address"
+      "rule": "Must be a valid Stellar address, often the same as the `to` address"
     },
     {
       "name": "amount",
       "type": "string",
       "description": "TYLERCOIN is purchased 1:1 for XLM. How much do you want to pay & receive?",
-      "rules": "Must be a valid numerical amount above any TSS signing fee for this contract"
+      "rule": "Must be a valid numerical amount above any TSS signing fee for this contract"
     }
-  ]
+  ] // Send as base64 encode so JSON.stringify -> btoa
 }
 ```
 
@@ -159,7 +159,7 @@ Name | Type | Description
 `vault` | string | Turing signing server account where signing fees must be paid to
 `signer` | string | The signing account for this contract on this turing server. This is what you'll add to contract or user accounts for multisig protection.
 `fee` | string | The XLM fee required by this turing server to sign for contracts.
-`fields` | array\<\{name: string, type: string\|object\|array, description: string, rules: string\}\> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rules` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
+`fields` | array\<\{name: string, type: string\|object\|array, description: string, rule: string\}\> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rule` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
 
 ###### Example
 
@@ -173,21 +173,21 @@ Name | Type | Description
       "name": "to",
       "type": "string",
       "description": "Where should we send TYLERCOIN to?",
-      "rules": "Must be a valid Stellar address"
+      "rule": "Must be a valid Stellar address"
     },
     {
       "name": "source",
       "type": "string",
       "description": "What's the source account for this transaction?",
-      "rules": "Must be a valid Stellar address, often the same as the `to` address"
+      "rule": "Must be a valid Stellar address, often the same as the `to` address"
     },
     {
       "name": "amount",
       "type": "string",
       "description": "TYLERCOIN is purchased 1:1 for XLM. How much do you want to pay & receive?",
-      "rules": "Must be a valid numerical amount above any TSS signing fee for this contract"
+      "rule": "Must be a valid numerical amount above any TSS signing fee for this contract"
     }
-  ]
+  ] // Will be base64 encoded so atob -> JSON.parse
 }
 ```
 
