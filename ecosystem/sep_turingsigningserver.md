@@ -66,11 +66,17 @@ Name | Type | Description
 ### Endpoints
 
 - [`POST /contract/<hash>`](#post-contract-hash)
-<!-- - [`POST /contract/<hash>/collate`](#post-contract-hash-collate) -->
+- [`POST /contract/<hash>/collate`](#post-contract-hash-collate)
+<br>
+<br>
 - [`GET /contract/<hash>`](#get-contract-hash)
-<!-- - [`GET /contract/<hash>/collate`](#get-contract-hash-collate) -->
+- [`GET /contract/<hash>/collate`](#get-contract-hash-collate)
+<br>
+<br>
 - [`PUT /contract/<hash>`](#put-contract-hash)
-<!-- - [`PUT /contract/<hash>/collate`](#put-contract-hash-collate) -->
+- [`PUT /contract/<hash>/collate`](#put-contract-hash-collate)
+<br>
+<br>
 - [`POST /contract/<hash>/run`](#post-contract-hash-run)
 - [`POST /contract/<hash>/run/collate`](#post-contract-hash-run-collate)
 
