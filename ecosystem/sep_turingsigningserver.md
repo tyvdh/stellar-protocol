@@ -67,6 +67,7 @@ Name | Type | Description
 
 - [`POST /contract/<hash>`](#post-contract-hash)
 - [`POST /contract/<hash>/collate`](#post-contract-hash-collate)
+<<<<<<< HEAD
 <br>
 <br>
 - [`GET /contract/<hash>`](#get-contract-hash)
@@ -77,6 +78,15 @@ Name | Type | Description
 - [`PUT /contract/<hash>/collate`](#put-contract-hash-collate)
 <br>
 <br>
+=======
+<br><br>
+- [`GET /contract/<hash>`](#get-contract-hash)
+- [`GET /contract/<hash>/collate`](#get-contract-hash-collate)
+<br><br>
+- [`PUT /contract/<hash>`](#put-contract-hash)
+- [`PUT /contract/<hash>/collate`](#put-contract-hash-collate)
+<br><br>
+>>>>>>> 8a9cd8dd344db76c752d14ff633f823b1fd8293f
 - [`POST /contract/<hash>/run`](#post-contract-hash-run)
 - [`POST /contract/<hash>/run/collate`](#post-contract-hash-run-collate)
 
