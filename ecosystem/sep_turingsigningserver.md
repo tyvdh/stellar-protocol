@@ -2,7 +2,7 @@
 
 ```
 SEP: TBD
-Title: Turing Signing Servers: Secure, decentralized transaction creation and signing through programmable contracts.
+Title: Turing Signing Servers: Decentralized turing complete transaction creation.
 Author: [Tyler van der Hoeven, @tyvdh, tyler@stellar.org](https://github.com/tyvdh)
 Track: Standard
 Status: Draft
@@ -66,11 +66,11 @@ Name | Type | Description
 ### Endpoints
 
 - [`POST /contract/<hash>`](#post-contract-hash)
-- [`POST /contract/<hash>/collate`](#post-contract-hash-collate)
+<!-- - [`POST /contract/<hash>/collate`](#post-contract-hash-collate) -->
 - [`GET /contract/<hash>`](#get-contract-hash)
-- [`GET /contract/<hash>/collate`](#get-contract-hash-collate)
+<!-- - [`GET /contract/<hash>/collate`](#get-contract-hash-collate) -->
 - [`PUT /contract/<hash>`](#put-contract-hash)
-- [`PUT /contract/<hash>/collate`](#put-contract-hash-collate)
+<!-- - [`PUT /contract/<hash>/collate`](#put-contract-hash-collate) -->
 - [`POST /contract/<hash>/run`](#post-contract-hash-run)
 - [`POST /contract/<hash>/run/collate`](#post-contract-hash-run-collate)
 
@@ -86,11 +86,13 @@ Name | Type | Description
 -----|------|------------
 `contract` | file | The contract function file the contract creator is uploading to the turing server.
 `turrets` | string | base64 encoded comma-separated list of urls where this contract will be hosted.
-`fields` | array<{name: string, type: string, description: string, rules: string}> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rules` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
+`fields` | array\<\{name: string, type: string\|object\|array, description: string, rules: string\}\> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rules` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
 
 ###### Example
 
 ```json5
+// TODO: include example for both array and object types
+
 {
   "contract": {
     ...
@@ -154,7 +156,7 @@ Name | Type | Description
 `vault` | string | Turing signing server account where signing fees must be paid to
 `signer` | string | The signing account for this contract on this turing server. This is what you'll add to contract or user accounts for multisig protection.
 `fee` | string | The XLM fee required by this turing server to sign for contracts.
-`fields` | array<{name: string, type: string, description: string, rules: string}> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rules` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
+`fields` | array\<\{name: string, type: string\|object\|array, description: string, rules: string\}\> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rules` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
 
 ###### Example
 
@@ -260,6 +262,46 @@ Name | Type | Description
   "signer": "GDLZ...",
   "signature": "UA6NqXp...qsHVJBAQ=="
 }
+```
+
+#### `POST /contract/<hash>/run/collate`
+
+This endpoint runs a smart contract collation which will gather all the signatures where this contract is stored via the turrets list and respond with a single signed XDR.
+
+##### Request
+
+###### Body Fields
+
+Fields for contract runs will be determined by the contract and discoverable by requesting `GET /contract/<hash>`. Will be confined to a normal JSON object and should be relatively simple.
+
+###### Query Params
+
+Name | Type | Description
+-----|------|------------
+`signatures` | number | number of signatures the collation should attach to the returned XDR
+
+###### Example
+
+```json
+{
+  "to": "GAWS...",
+  "source": "GAWS...",
+  "amount": "500"
+}
+```
+
+##### Response
+
+###### Fields
+
+Status Code | Type | Description
+-----|------|------------
+`200` | string | base64 signed transaction envelope produced by the collated contract
+
+###### Example
+
+```text
+AAAAAC0mu...EtAAAAAAAAAAAA=
 ```
 
 ## Design Rationale
