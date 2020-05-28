@@ -25,7 +25,7 @@ In short there are two capabilities being added in this SEP to allow for decentr
 
 ## Content Type
 
-All endpoints accept `Content-Type: application/json` with the exception of `POST|UPDATE /contract/<hash>` which accepts `Content-Type: multipart/form-data`.
+All endpoints accept `Content-Type: application/json` with the exception of `POST /contract` and `UPDATE /contract/<hash>` which accepts `Content-Type: multipart/form-data`.
 
 All endpoints respond with `Content-Type: application/json` with the exception of `GET /contract/<hash>/run/collate` and `PUT /contract/<hash>` which respond with `Content-Type: text/plain`.
 
@@ -61,8 +61,8 @@ Name | Type | Description
 
 ## Endpoints
 
-- [`POST /contract/<hash>`](#post-contracthash)
-- [`POST /contract/<hash>/collate`](#post-contracthashcollate)
+- [`POST /contract`](#post)
+- [`POST /contract/collate`](#post-collate)
 <br><br>
 - [`GET /contract/<hash>`](#get-contracthash)
 - [`GET /contract/<hash>/collate`](#get-contracthashcollate)
@@ -73,7 +73,7 @@ Name | Type | Description
 - [`POST /contract/<hash>/run`](#post-contracthashrun)
 - [`POST /contract/<hash>/run/collate`](#post-contracthashruncollate)
 
-### `POST /contract/<hash>`
+### `POST /contract`
 
 This endpoint uploads a smart contract.
 
@@ -83,7 +83,8 @@ This endpoint uploads a smart contract.
 
 Name | Type | Description
 -----|------|------------
-`contract` | file | The contract function file the contract creator is uploading to the turing server.
+`file` | file | The contract function file the contract creator is uploading to the turing server.
+`contract` | string | Stellar public key address used for signing updates.
 `turrets` | string | base64 encoded comma-separated list of urls where this contract will be hosted.
 `fields` | array\<\{name: string, type: string\|object\|array, description: string, rule: string\}\> | Array of objects detailing the expected incoming request parameters. `name` is the key for the outgoing request. `type` is the key value type, e.g. `"string"` or `"number"`. `description` is the human readable display explanation for the intention behind the given field. `rule` is a service provider explanation for any restrictions which could cause the request to be rejected. Intended to help build regex flows or help explain incoming errors from a given contract.
 
@@ -93,11 +94,12 @@ Name | Type | Description
 // TODO: include example for both array and object types
 
 {
-  "contract": {
+  "file": {
     ...
     "path": "/path/to/contract.js",
     ...
   },
+  "contract": "GB7S...",
   "turrets": "aHR0c...J1eno=",
   // Send as base64 encode so btoa
   "https://turing-signing-server-0.stellar.buzz,https//turing-signing-server-1.stellar.buzz,https://turing-signing-server-2.stellar.buzz,https://turing-signing-server-3.stellar.buzz,https://turing-signing-server-4.stellar.buzz"
@@ -131,6 +133,7 @@ Name | Type | Description
 
 Name | Type | Description
 -----|------|------------
+`hash` | string | SHA256 hash of the contract file buffer which will serve as the `<hash>` id for all future calls to this contract
 `vault` | string | Turing signing server account where signing fees must be paid to
 `signer` | string | The signing account for this contract on this turing server. This is what you'll add to contract or user accounts for multisig protection.
 `fee` | string | The XLM fee required by this turing server to sign for contracts.
@@ -139,6 +142,7 @@ Name | Type | Description
 
 ```json
 {
+  "hash": "06953...67bc2",
   "vault": "GD6J...",
   "signer": "GDLZ...",
   "fee": "0.5"
@@ -155,6 +159,7 @@ This endpoint gets the details surrounding a smart contract.
 
 Name | Type | Description
 -----|------|------------
+`contract` | string | Stellar public key address used for signing updates.
 `vault` | string | Turing signing server account where signing fees must be paid to
 `signer` | string | The signing account for this contract on this turing server. This is what you'll add to contract or user accounts for multisig protection.
 `fee` | string | The XLM fee required by this turing server to sign for contracts.
@@ -164,6 +169,7 @@ Name | Type | Description
 
 ```json
 {
+  "contract": "GB7S...",
   "vault": "GD6J...",
   "signer": "GDLZ...",
   "fee": "0.5",
