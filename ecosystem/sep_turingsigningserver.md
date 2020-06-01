@@ -328,7 +328,7 @@ Name | Type | Description
 
 ##### Example
 
-```json
+```json5
 {
   "request": {
     "to": "GBHK...",
